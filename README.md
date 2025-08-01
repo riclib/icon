@@ -4,6 +4,8 @@ Type-safe Lucide icons for Go with the templ templating engine.
 
 This standalone library provides all 1600+ Lucide icons as Go constants with full type safety. It includes powerful search and categorization functionality, making it easy to find and use the perfect icon for your application.
 
+The icons are generated from the [Lucide Icons](https://lucide.dev) project and are designed to work seamlessly with the [templ](https://templ.guide) templating engine for Go.
+
 ## Features
 
 - 🎯 **Type-safe** - All 1600+ icon names as constants
@@ -27,26 +29,16 @@ go get github.com/riclib/icon
 import "github.com/riclib/icon"
 
 // Using the Icon function with type-safe constants
-@icon.Icon(icon.IconHome, templ.Attributes{"class": "w-6 h-6"})
-@icon.Icon(icon.IconArrowRight, templ.Attributes{"class": "text-blue-500"})
+component := icon.Icon(icon.IconHouse, templ.Attributes{"class": "w-6 h-6 text-blue-500"})
+component := icon.Icon(icon.IconUser, templ.Attributes{"class": "w-6 h-6 text-green-500"})
 
-// Direct component usage
-@icon.Home(templ.Attributes{"class": "w-6 h-6"})
-@icon.ArrowRight(templ.Attributes{"class": "text-blue-500"})
-```
+// Direct component usage (no attributes)
+component := icon.House()
+component := icon.User()
 
-### Styling Icons
-
-Icons use `currentColor` for stroke, making them easy to style:
-
-```go
-// Size with CSS classes
-@icon.Icon(icon.IconHeart, templ.Attributes{"class": "w-4 h-4"})
-
-// Inline styles
-@icon.Icon(icon.IconStar, templ.Attributes{
-    "style": "width: 24px; height: 24px; color: gold;",
-})
+// Direct component usage with attributes
+component := icon.HouseWithAttrs(templ.Attributes{"class": "w-6 h-6"})
+component := icon.UserWithAttrs(templ.Attributes{"class": "w-6 h-6"})
 ```
 
 ### Categories
@@ -57,15 +49,14 @@ Access icons by category:
 // Get all navigation icons
 navIcons := icon.NavigationIcons()
 for _, iconName := range navIcons {
-    @icon.Icon(iconName, attrs)
+    component := icon.Icon(iconName, templ.Attributes{})
 }
 
-// Available categories:
-// Navigation, Actions, Media, Communication, Files, UI, Data, 
-// Devices, Social, Weather, Transportation, Business, and more...
+// Get all available categories
+categories := icon.AllCategories()
 
 // Check an icon's category
-category := icon.GetIconCategory(icon.IconHome) // "navigation"
+category := icon.GetIconCategory(icon.IconHouse) // "buildings"
 ```
 
 ### Search Functionality
@@ -80,7 +71,7 @@ for _, result := range results {
     // result.IconName - the icon constant
     // result.Relevance - relevance score (0-100)
     // result.MatchType - "exact", "tag", "category", or "partial"
-    @icon.Icon(result.IconName, attrs)
+    component := icon.Icon(result.IconName, templ.Attributes{})
 }
 
 // Search by tag
@@ -97,6 +88,56 @@ results := search.SearchWithOptions("edit", icon.SearchOptions{
 })
 ```
 
+### Utility Functions
+
+```go
+// Check if an icon exists
+if icon.IconExists("house") {
+    // icon exists
+}
+
+// Get total icon count
+count := icon.IconCount() // 1600+
+
+// Get all available icons
+allIcons := icon.AllIcons()
+
+// Convert string to IconName
+if iconName, ok := icon.IconByName("house"); ok {
+    component := icon.Icon(iconName, templ.Attributes{})
+}
+```
+
+## Examples
+
+See the [examples directory](examples/) for complete working examples.
+
+### Simple Go Usage
+
+```go
+package main
+
+import (
+    "fmt"
+    "github.com/riclib/icon"
+)
+
+func main() {
+    // Access icon constants
+    homeIcon := icon.IconHouse
+    userIcon := icon.IconUser
+    
+    fmt.Printf("House icon: %s\n", string(homeIcon))
+    fmt.Printf("User icon: %s\n", string(userIcon))
+    fmt.Printf("Total icons: %d\n", icon.IconCount())
+    
+    // Use search functionality
+    searcher := icon.NewIconSearcher()
+    results := searcher.Search("user")
+    fmt.Printf("Found %d icons matching 'user'\n", len(results))
+}
+```
+
 ## Requirements
 
 - Go 1.24+
@@ -107,16 +148,22 @@ results := search.SearchWithOptions("edit", icon.SearchOptions{
 Icons are from [Lucide](https://lucide.dev) (ISC License).
 This package is MIT licensed.
 
-## Contributing
+## Regenerating Icons
 
-To regenerate the icons from the latest Lucide release:
+To update to the latest Lucide icons:
 
 ```bash
-go run cmd/generate-icons/main.go
+./update-icons.sh
 ```
 
-This will:
+This script will:
 1. Clone the latest Lucide repository
 2. Generate all icon components
 3. Update the registry and search indexes
 4. Create category groupings
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit issues or pull requests.
+
+For issues related to the icons themselves, please check the [Lucide Icons](https://github.com/lucide-icons/lucide) repository first.

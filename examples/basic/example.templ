@@ -29,20 +29,5 @@ templ ExampleComponent() {
 				<span class="mt-2">Settings</span>
 			</div>
 		</div>
-		
-		// Search example
-		<div class="mt-8">
-			<h2 class="text-xl font-semibold mb-2">Search Results for "arrow"</h2>
-			<div class="grid grid-cols-4 gap-2">
-				{ search := icon.NewIconSearcher() }
-				{ results := search.Search("arrow") }
-				for _, result := range results[:8] { // First 8 results
-					<div class="flex flex-col items-center p-2 border rounded">
-						@icon.Icon(result.IconName, templ.Attributes{"class": "w-6 h-6"})
-						<span class="text-xs mt-1">{ string(result.IconName) }</span>
-					</div>
-				}
-			</div>
-		</div>
 	</div>
 }

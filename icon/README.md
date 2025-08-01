@@ -2,6 +2,8 @@
 
 Type-safe Lucide icons for use with [templ](https://templ.guide) templating engine.
 
+This directory contains the generated icon files. For full documentation, see the main README at the root of this repository.
+
 ## Features
 
 - 🎯 **Type-safe** - All 1600+ icon names as constants
@@ -10,12 +12,6 @@ Type-safe Lucide icons for use with [templ](https://templ.guide) templating engi
 - 🎨 **Customizable** - Full control via templ.Attributes
 - 🚀 **Tree-shakable** - Only used icons are included in your build
 - 🔄 **Up-to-date** - Generated from latest Lucide icons
-
-## Installation
-
-```go
-import "github.com/riclib/icon"
-```
 
 ## Usage
 
@@ -42,11 +38,6 @@ Icons use `currentColor` for stroke, making them easy to style:
 // Inline styles
 @icon.Icon(icon.IconStar, templ.Attributes{
     "style": "width: 24px; height: 24px; color: gold;",
-})
-
-// With Open Props
-@icon.Icon(icon.IconCheck, templ.Attributes{
-    "style": fmt.Sprintf("color: %s; width: %s;", op.Color.Green(6), op.Size(5)),
 })
 ```
 

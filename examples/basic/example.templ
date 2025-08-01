@@ -1,0 +1,48 @@
+package main
+
+import (
+	"github.com/a-h/templ"
+	"github.com/riclib/icon"
+)
+
+// Simple example showing how to use the icons
+templ ExampleComponent() {
+	<div class="p-4">
+		<h1 class="text-2xl font-bold mb-4">Icon Examples</h1>
+		
+		<div class="grid grid-cols-3 gap-4">
+			// Home icon
+			<div class="flex flex-col items-center">
+				@icon.Home(templ.Attributes{"class": "w-8 h-8 text-blue-500"})
+				<span class="mt-2">Home</span>
+			</div>
+			
+			// User icon
+			<div class="flex flex-col items-center">
+				@icon.User(templ.Attributes{"class": "w-8 h-8 text-green-500"})
+				<span class="mt-2">User</span>
+			</div>
+			
+			// Settings icon
+			<div class="flex flex-col items-center">
+				@icon.Settings(templ.Attributes{"class": "w-8 h-8 text-purple-500"})
+				<span class="mt-2">Settings</span>
+			</div>
+		</div>
+		
+		// Search example
+		<div class="mt-8">
+			<h2 class="text-xl font-semibold mb-2">Search Results for "arrow"</h2>
+			<div class="grid grid-cols-4 gap-2">
+				{ search := icon.NewIconSearcher() }
+				{ results := search.Search("arrow") }
+				for _, result := range results[:8] { // First 8 results
+					<div class="flex flex-col items-center p-2 border rounded">
+						@icon.Icon(result.IconName, templ.Attributes{"class": "w-6 h-6"})
+						<span class="text-xs mt-1">{ string(result.IconName) }</span>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+}
